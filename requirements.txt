@@ -1,0 +1,5 @@
+insightface>=0.7.3
+onnxruntime-gpu          # 仅 CPU；用 GPU 请改装 onnxruntime-gpu 并去掉这行
+opencv-python>=4.7
+numpy>=1.23
+tqdm                 # 可选，进度条
