@@ -51,11 +51,11 @@ python screen_time.py --gallery ./gallery --videos ./videos --out ./output --gpu
 
 | 参数 | 作用 | 建议 |
 |------|------|------|
-| `--sim-threshold` | 判定为某嘉宾的最低余弦相似度 | 默认 0.42；偏松→张冠李戴，偏紧→漏判。33 人较多，建议在 0.40~0.48 间试 |
+| `--sim-threshold` | 判定为某嘉宾的最低余弦相似度 | 默认 0.40；偏松→张冠李戴，偏紧→漏判。33 人较多，建议在 0.40~0.48 间试 |
 | `--margin-threshold` | top1 须比 top2 身份高出的差值，降低相似脸混淆 | 默认 0.04，可升到 0.06~0.08 |
-| `--sample-fps` | 每秒分析几帧 | 默认 3；要更准可调 5，更快可调 1~2 |
+| `--sample-fps` | 每秒分析几帧 | 默认 6 |
 | `--min-det-score` / `--min-face-px` | 过滤低质/过小人脸 | 噪声多时调高 |
-| `--max-age` | 轨迹容忍的最长漏检步数（也用于 gap 续接） | 默认 12（≈4 秒@3fps） |
+| `--max-age` | 轨迹容忍的最长漏检步数（也用于 gap 续接） | 默认 12（≈2 秒@6fps） |
 | `--no-track`（`--use-track false`） | 关闭跟踪，纯逐帧比对 | 想要最保守、不续接时用 |
 | `--bridge-gaps false` | 不把续接的空隙计入出镜 | 想要绝对保守时用 |
 
@@ -68,5 +68,3 @@ python screen_time.py --gallery ./gallery --videos ./videos --out ./output --gpu
   短暂缺失；若需要把「人在画面但背对镜头」也算出镜，需另加行人重识别（ReID）。
 - `UNKNOWN`（未达阈值的脸）默认不计入任何嘉宾；如某期某人秒数异常偏低，多半是
   阈值太紧或参考图不够，先看 `crops/` 抽检。
-- 10 期 × 120 分钟 @3fps ≈ 21.6 万帧：GPU 上数小时可完成，纯 CPU 建议过夜跑。
-  脚本逐期写 CSV，中途中断已完成的期不会丢。
